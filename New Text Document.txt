@@ -1,0 +1,42 @@
+private void button5_Click(object sender, EventArgs e)
+{
+    //Search Button
+    try
+    {
+        //search.SelectCommand = new MySqlCommand("SELECT * FROM customer WHERE CONCAT('customerId', 'customerName', 'createdBy', 'lastUpdateBy') LIKE '" + textBox5.Text + "'", con);
+        search.SelectCommand = new MySqlCommand("SELECT * FROM customer WHERE customerId LIKE '%" + textBox5.Text + "%' OR customerName LIKE '%" + textBox5.Text + "%' OR createdBy LIKE '%" + textBox5.Text + "%' OR lastUpdateBy LIKE '%" + textBox5.Text + "%'", con);
+        
+        DataTable custTableView = new DataTable();
+        search.Fill(custTableView);
+        BindingSource customerSearch = new BindingSource();
+        customerSearch.DataSource = custTableView;
+        search.Update(custTableView);
+        dataGridView1.DataSource = custTableView;
+
+   
+
+    }
+    catch (Exception x)
+    {
+        MessageBox.Show(x.ToString(), "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+
+private void button6_Click(object sender, EventArgs e)
+{
+    //Clear Button
+    try
+    {
+        {
+            cust.SelectCommand = new MySqlCommand("SELECT * FROM customer", con);
+            DataTable custTableView = new DataTable();
+            cust.Fill(custTableView);
+            dataGridView1.DataSource = custTableView;
+        }
+
+    }
+    catch (Exception x)
+    {
+        MessageBox.Show(x.ToString(), "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
